@@ -1,0 +1,292 @@
+/* Login component styles to handle autofill behavior */
+
+/* Allow normal autofill for username fields */
+input[type="text"]:-webkit-autofill,
+input[type="text"]:-webkit-autofill:hover,
+input[type="text"]:-webkit-autofill:focus,
+input[type="text"]:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #100D24 inset !important;
+  -webkit-text-fill-color: #F4F1F8 !important;
+  transition: background-color 5000s ease-in-out 0s;
+  background-color: transparent !important;
+}
+
+/* Comprehensive fix for password field blinking - consolidate all rules */
+input[type="password"] {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
+  animation: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  caret-color: #000;
+  -webkit-text-security: disc;
+  text-security: disc;
+}
+
+/* Prevent blinking/flashing when autofill is detected */
+input[type="password"]:-webkit-autofill,
+input[type="password"]:-webkit-autofill:hover,
+input[type="password"]:-webkit-autofill:focus,
+input[type="password"]:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #100D24 inset !important;
+  -webkit-text-fill-color: #F4F1F8 !important;
+  transition: background-color 5000s ease-in-out 0s;
+  background-color: transparent !important;
+  animation: none !important;
+  -webkit-animation: none !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+/* Completely hide browser autofill UI elements that cause blinking */
+input[type="password"]::-webkit-credentials-auto-fill-button {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  right: -9999px !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+/* Hide Chrome/Edge password manager UI completely */
+input[type="password"]::-webkit-credentials-auto-fill-button-preview {
+  display: none !important;
+}
+
+/* Prevent browser from showing any autofill indicators */
+input[type="password"]::-webkit-contacts-auto-fill-button {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Force browser to not show autocomplete suggestions */
+input[type="password"][autocomplete="off"] {
+  -webkit-autocomplete: off !important;
+  autocomplete: off !important;
+}
+
+/* Smooth transitions for all input fields */
+.ant-input {
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  position: relative;
+}
+
+.ant-input:focus {
+  border-color: var(--color-primary, #2563EB) !important;
+  box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb, 37, 99, 235), 0.1) !important;
+}
+
+/* Target specific autofill prevention for password fields only */
+input[type="password"][autocomplete="new-password"] {
+  -webkit-autocomplete: new-password;
+  -moz-autocomplete: new-password;
+  autocomplete: new-password;
+}
+
+/* Additional protection for password managers */
+input[type="password"][data-lpignore="true"] {
+  -webkit-autocomplete: new-password;
+  -moz-autocomplete: new-password;
+  autocomplete: new-password;
+}
+
+/* Hide all password manager overlays and UI elements */
+input[type="password"]::after,
+input[type="password"]::before {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Hide any browser-added elements inside the input wrapper */
+.ant-input-password-wrapper::after,
+.ant-input-password-wrapper::before,
+.ant-input-password-wrapper *::after,
+.ant-input-password-wrapper *::before {
+  display: none !important;
+}
+
+/* Prevent browser from adding overlay elements */
+.ant-input-password {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hide Chrome's password manager icon/button completely */
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-credentials-auto-fill-button-preview {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+  z-index: -1 !important;
+}
+
+/* Additional rules to hide password manager UI completely */
+input[type="password"] {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+
+/* Hide LastPass, 1Password, and other password manager overlays */
+div[id*="lptopbar"],
+div[class*="lpiframe"],
+div[id*="lpiframe"],
+div[class*="lp-topbar"],
+div[id*="lastpass"],
+div[class*="lastpass"],
+iframe[src*="lastpass"],
+iframe[src*="lptopbar"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  left: -9999px !important;
+  top: -9999px !important;
+  width: 0 !important;
+  height: 0 !important;
+  z-index: -1 !important;
+}
+
+/* Style the password visibility toggle icon */
+.ant-input-password-icon {
+  color: #8B86A2 !important;
+  transition: color 0.15s ease !important;
+}
+
+.ant-input-password-icon:hover {
+  color: var(--color-primary, #2563EB) !important;
+}
+
+input[type="password"]::-webkit-credentials-auto-fill-button-preview {
+  display: none !important;
+}
+
+/* Prevent browser from showing any autofill indicators */
+input[type="password"]::-webkit-contacts-auto-fill-button {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Force browser to not show autocomplete suggestions */
+input[type="password"][autocomplete="off"] {
+  -webkit-autocomplete: off !important;
+  autocomplete: off !important;
+}
+
+/* Smooth transitions for all input fields */
+.ant-input {
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  position: relative;
+}
+
+.ant-input:focus {
+  border-color: var(--color-primary, #2563EB) !important;
+  box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb, 37, 99, 235), 0.1) !important;
+}
+
+/* Target specific autofill prevention for password fields only */
+input[type="password"][autocomplete="new-password"] {
+  -webkit-autocomplete: new-password;
+  -moz-autocomplete: new-password;
+  autocomplete: new-password;
+}
+
+/* Additional protection for password managers */
+input[type="password"][data-lpignore="true"] {
+  -webkit-autocomplete: new-password;
+  -moz-autocomplete: new-password;
+  autocomplete: new-password;
+}
+
+/* Hide all password manager overlays and UI elements */
+input[type="password"]::after,
+input[type="password"]::before {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Hide any browser-added elements inside the input wrapper */
+.ant-input-password-wrapper::after,
+.ant-input-password-wrapper::before,
+.ant-input-password-wrapper *::after,
+.ant-input-password-wrapper *::before {
+  display: none !important;
+}
+
+/* Prevent browser from adding overlay elements */
+.ant-input-password {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hide Chrome's password manager icon/button completely */
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-credentials-auto-fill-button-preview {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+  z-index: -1 !important;
+}
+
+/* Additional rules to hide password manager UI completely */
+input[type="password"] {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+
+/* Hide LastPass, 1Password, and other password manager overlays */
+div[id*="lptopbar"],
+div[class*="lpiframe"],
+div[id*="lpiframe"],
+div[class*="lp-topbar"],
+div[id*="lastpass"],
+div[class*="lastpass"],
+iframe[src*="lastpass"],
+iframe[src*="lptopbar"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  left: -9999px !important;
+  top: -9999px !important;
+  width: 0 !important;
+  height: 0 !important;
+  z-index: -1 !important;
+}
+
+/* Style the password visibility toggle icon */
+.ant-input-password-icon {
+  color: #8B86A2 !important;
+  transition: color 0.15s ease !important;
+}
+
+.ant-input-password-icon:hover {
+  color: var(--color-primary, #2563EB) !important;
+}

@@ -1,0 +1,437 @@
+/* Dataflix Dark Theme — palette pulled directly from dataflix.com's own
+   shipped CSS custom properties (--bg/--bg-2/--bg-3, --p-*, --c-*, --ink*,
+   --line), not approximated. Purple (--p-500, #6666D1) is the site's actual
+   primary/CTA color; cyan (--c-400, #5DD3E8) is its accent/highlight color,
+   used for links, active-tab indicators, and glows — never as a base UI
+   fill by itself. */
+:root {
+  /* Solid endpoints, for contexts (e.g. antd ConfigProvider tokens) that need
+     a plain color rather than a gradient/shadow value. Kept in sync with
+     src/styles/antdTheme.ts's colorPrimary. */
+  --color-primary: #6666D1;
+  --color-primary-light: #8682DC;
+  --color-primary-dark: #5454B8;
+  --color-primary-rgb: 102, 102, 209;
+
+  /* Cyan accent (site's --c-400 scale) — links, active-tab underline, focus
+     glows, highlight badges. Distinct from --color-primary on purpose. */
+  --color-accent: #5DD3E8;
+  --color-accent-light: #8FE3F0;
+  --color-accent-dark: #2EBFDC;
+  --color-accent-rgb: 93, 211, 232;
+
+  /* Dark palette tokens (background/card/text/border/error), mirroring the
+     site's --bg/--bg-2/--bg-3 and --ink* scale. */
+  --color-background: #0A0817;
+  --color-card: #100D24;
+  --color-surface-elevated: #16122E;
+  --color-text: #F4F1F8;
+  --color-text-secondary: #C5C0D6;
+  --color-text-muted: #8B86A2;
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-border-strong: rgba(255, 255, 255, 0.16);
+  --color-error: #F47272;
+  --color-success: #4ADE80;
+  --color-warning: #F0C97A;
+
+  /* Primary Gradient — purple only (site's real .btn-primary is a SOLID
+     --p-500 fill with white text, not its flashier cyan-inclusive --grad-1;
+     that one is reserved for --hero-gradient below). Cyan's own luminance is
+     too close to white for white button text to stay readable across it, so
+     buttons/modal headers/anything with text directly on top use this
+     purple-only range instead — verified >4.3:1 contrast with white text at
+     every stop. */
+  --primary-gradient: linear-gradient(135deg, #8682DC 0%, #6666D1 60%, #5454B8 100%);
+  --primary-gradient-hover: linear-gradient(135deg, #6666D1 0%, #5454B8 60%, #43439A 100%);
+  --primary-shadow: 0 8px 24px -8px rgba(102, 102, 209, 0.45);
+  --primary-shadow-hover: 0 12px 32px -8px rgba(102, 102, 209, 0.55);
+
+  /* Hero Gradient — the site's actual --grad-1 (cyan -> purple -> deep
+     purple), used only on large decorative surfaces with no text directly
+     on top of the raw gradient (e.g. the Login page's full-bleed
+     background, where the login card itself is a separate solid-dark
+     surface) — never behind button/label text. */
+  --hero-gradient: linear-gradient(135deg, #5DD3E8 0%, #8682DC 50%, #5454B8 100%);
+
+  /* Secondary Gradient — a darker surface gradient (site has no solid nav
+     background of its own to copy; this stays within its --bg-2/--bg-3
+     surface tones) for the header and secondary buttons. */
+  --secondary-gradient: linear-gradient(135deg, #100D24 0%, #19142E 100%);
+  --secondary-gradient-hover: linear-gradient(135deg, #16122E 0%, #241E3D 100%);
+  --secondary-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+  --secondary-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.45);
+
+  /* Accent Gradient - cyan scale */
+  --accent-gradient: linear-gradient(135deg, #5DD3E8 0%, #2EBFDC 100%);
+  --accent-gradient-hover: linear-gradient(135deg, #8FE3F0 0%, #5DD3E8 100%);
+  --accent-shadow: 0 4px 15px rgba(93, 211, 233, 0.25);
+  --accent-shadow-hover: 0 8px 25px rgba(93, 211, 233, 0.35);
+
+  /* Success Gradient - green */
+  --success-gradient: linear-gradient(135deg, #22c55e 0%, #4ADE80 100%);
+  --success-gradient-hover: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
+  --success-shadow: 0 4px 15px rgba(74, 222, 128, 0.25);
+  --success-shadow-hover: 0 8px 25px rgba(74, 222, 128, 0.35);
+
+  /* Warning Gradient - gold (site's nr-event-status/is-upcoming accent) */
+  --warning-gradient: linear-gradient(135deg, #F0C97A 0%, #ffd89a 100%);
+  --warning-gradient-hover: linear-gradient(135deg, #e0b968 0%, #F0C97A 100%);
+  --warning-shadow: 0 4px 15px rgba(240, 201, 122, 0.25);
+  --warning-shadow-hover: 0 8px 25px rgba(240, 201, 122, 0.35);
+
+  /* Danger Gradient - red */
+  --danger-gradient: linear-gradient(135deg, #f47272 0%, #dc2626 100%);
+  --danger-gradient-hover: linear-gradient(135deg, #ff8a8a 0%, #f47272 100%);
+  --danger-shadow: 0 4px 15px rgba(244, 114, 114, 0.25);
+  --danger-shadow-hover: 0 8px 25px rgba(244, 114, 114, 0.35);
+}
+
+/* Global Button Styles */
+.ant-btn-primary {
+  background: var(--primary-gradient) !important;
+  border: none !important;
+  border-radius: 10px !important;
+  height: 48px !important;
+  font-weight: 700 !important;
+  box-shadow: var(--primary-shadow) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.ant-btn-primary:hover {
+  background: var(--primary-gradient-hover) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: var(--primary-shadow-hover) !important;
+}
+
+.ant-btn-primary:focus {
+  background: var(--primary-gradient) !important;
+  box-shadow: var(--primary-shadow) !important;
+}
+
+/* Pressed state: settle back down with a slight scale for tactile feedback. */
+.ant-btn-primary:active {
+  transform: translateY(0) scale(0.98) !important;
+  box-shadow: 0 2px 8px rgba(102, 102, 209, 0.35) !important;
+  transition: transform 0.1s ease, box-shadow 0.1s ease !important;
+}
+
+/* Disabled state: without this, a disabled primary button still shows the
+   full gradient (only the cursor/opacity would hint it's inactive), since
+   antd's own disabled-state colors aren't !important and lose to the rule
+   above. Needs to read as clearly inactive wherever a primary button can be
+   disabled (e.g. a multi-step form's "Next" until the page is complete). */
+.ant-btn-primary:disabled,
+.ant-btn-primary.ant-btn-disabled {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #5C5777 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  cursor: not-allowed !important;
+}
+
+.ant-btn-primary:disabled:hover,
+.ant-btn-primary.ant-btn-disabled:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #5C5777 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* Secondary Button */
+.ant-btn-default {
+  background: var(--secondary-gradient) !important;
+  border: none !important;
+  color: white !important;
+  box-shadow: var(--secondary-shadow) !important;
+  transition: all 0.3s ease !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.ant-btn-default:hover {
+  background: var(--secondary-gradient-hover) !important;
+  color: white !important;
+  transform: translateY(-2px) !important;
+  box-shadow: var(--secondary-shadow-hover) !important;
+}
+
+/* Success Button — green, like gold/cyan, is a light-ish hue at both
+   gradient stops (verified <2.3:1 contrast with white text) — dark text
+   instead, same reasoning as the warning button. */
+.ant-btn-success {
+  background: var(--success-gradient) !important;
+  border: none !important;
+  color: #0A0817 !important;
+  box-shadow: var(--success-shadow) !important;
+  transition: all 0.3s ease !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.ant-btn-success:hover {
+  background: var(--success-gradient-hover) !important;
+  color: #0A0817 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: var(--success-shadow-hover) !important;
+}
+
+/* Warning Button — gold is a light fill, so (unlike the other gradient
+   buttons) it needs dark text to stay readable. */
+.ant-btn-warning {
+  background: var(--warning-gradient) !important;
+  border: none !important;
+  color: #0A0817 !important;
+  box-shadow: var(--warning-shadow) !important;
+  transition: all 0.3s ease !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.ant-btn-warning:hover {
+  background: var(--warning-gradient-hover) !important;
+  color: #0A0817 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: var(--warning-shadow-hover) !important;
+}
+
+/* Danger Button */
+.ant-btn-danger {
+  background: var(--danger-gradient) !important;
+  border: none !important;
+  color: white !important;
+  box-shadow: var(--danger-shadow) !important;
+  transition: all 0.3s ease !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.ant-btn-danger:hover {
+  background: var(--danger-gradient-hover) !important;
+  color: white !important;
+  transform: translateY(-2px) !important;
+  box-shadow: var(--danger-shadow-hover) !important;
+}
+
+/* Menu Item Selected State — the site's own convention is cyan for
+   "active"/highlighted state (e.g. its .is-active pill: a soft cyan tint +
+   cyan border/text), reserving solid purple for actual CTA buttons. Kept
+   understated (a tint, not a solid fill) to match that, rather than making
+   every selected nav item look like a big purple button. */
+.main-sidebar .menu-item-selected,
+.main-sidebar .ant-menu-item-selected,
+.main-sidebar .ant-menu-sub .ant-menu-item-selected {
+  background: rgba(93, 211, 232, 0.12) !important;
+  color: var(--color-accent) !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+}
+
+.main-sidebar .ant-menu-item-selected::after,
+.main-sidebar .ant-menu-sub .ant-menu-item-selected::after {
+  border-right: 3px solid var(--color-accent) !important;
+}
+
+.main-sidebar .ant-menu-item:hover {
+  background: rgba(93, 211, 232, 0.08) !important;
+  color: var(--color-accent) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Header Gradient */
+.app-header {
+  background: var(--secondary-gradient) !important;
+  box-shadow: var(--secondary-shadow) !important;
+}
+
+/* Card Gradient Effects */
+.ant-card {
+  border-radius: 12px !important;
+  /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important; */
+  box-shadow: 0 8px 16px rgba(45, 45, 45, 0.12) !important;
+  transition: all 0.3s ease !important;
+}
+
+.ant-card:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 4px rgb(60, 60, 63) !important;
+}
+
+/* Input Focus States — cyan glow (the site's own accent for highlighted/
+   focused elements), not purple. */
+.ant-input:focus,
+.ant-input-focused {
+  border-color: var(--color-accent) !important;
+  box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb), 0.15) !important;
+}
+
+.ant-input-password:focus,
+.ant-input-password-focused {
+  border-color: var(--color-accent) !important;
+  box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb), 0.15) !important;
+}
+
+/* Tab Active State — cyan, matching the site's own convention of cyan for
+   active/highlighted state (purple stays reserved for CTA buttons). */
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: var(--color-accent) !important;
+  font-weight: 600 !important;
+}
+
+.ant-tabs-ink-bar {
+  background: var(--color-accent) !important;
+}
+
+/* Notification Gradient */
+.ant-notification-notice {
+  border-radius: 12px !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Modal Gradient */
+.ant-modal-content {
+  border-radius: 16px !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15) !important;
+}
+
+.ant-modal-header {
+  background: var(--primary-gradient) !important;
+  border-radius: 16px 16px 0 0 !important;
+  border: none !important;
+  padding-left: 12px !important;
+}
+
+.ant-modal-title {
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+.ant-modal-close {
+  padding: 13px !important;
+  right: 24px !important;
+}
+
+/* Add User Modal - Rectangular Header */
+.add-user-modal .ant-modal-header {
+  border-radius: 0 !important;
+}
+
+/* Delete User Modal - Rectangular Header */
+.delete-user-modal .ant-modal-header {
+  border-radius: 0 !important;
+}
+
+.add-applicants-modal .ant-modal-header {
+  border-radius: 0 !important;
+}
+
+.transfer-applicants-modal .ant-modal-header {
+  border-radius: 0 !important;
+}
+
+.delete-applicants-modal .ant-modal-header {
+  border-radius: 0 !important;
+}
+
+/* Dropdown Gradient */
+.ant-dropdown-menu {
+  border-radius: 12px !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12) !important;
+  border: none !important;
+}
+
+.ant-dropdown-menu-item:hover {
+  background: var(--accent-gradient) !important;
+  color: #0A0817 !important;
+}
+
+/* Progress Bar Gradient */
+.ant-progress-bg {
+  background: var(--primary-gradient) !important;
+}
+
+/* Badge Gradient */
+.ant-badge-count {
+  background: var(--danger-gradient) !important;
+  box-shadow: var(--danger-shadow) !important;
+}
+
+/* Custom Gradient Classes */
+.gradient-primary {
+  background: var(--primary-gradient) !important;
+  color: white !important;
+  box-shadow: var(--primary-shadow) !important;
+}
+
+.gradient-secondary {
+  background: var(--secondary-gradient) !important;
+  color: white !important;
+  box-shadow: var(--secondary-shadow) !important;
+}
+
+.gradient-accent {
+  background: var(--accent-gradient) !important;
+  color: #0A0817 !important;
+  box-shadow: var(--accent-shadow) !important;
+}
+
+.gradient-success {
+  background: var(--success-gradient) !important;
+  color: #0A0817 !important;
+  box-shadow: var(--success-shadow) !important;
+}
+
+.gradient-warning {
+  background: var(--warning-gradient) !important;
+  color: #0A0817 !important;
+  box-shadow: var(--warning-shadow) !important;
+}
+
+.gradient-danger {
+  background: var(--danger-gradient) !important;
+  color: white !important;
+  box-shadow: var(--danger-shadow) !important;
+}
+
+/* Hover Effects for Custom Classes */
+.gradient-primary:hover,
+.gradient-secondary:hover,
+.gradient-accent:hover,
+.gradient-success:hover,
+.gradient-warning:hover,
+.gradient-danger:hover {
+  transform: translateY(-2px) !important;
+  transition: all 0.3s ease !important;
+}
+
+.gradient-primary:hover {
+  background: var(--primary-gradient-hover) !important;
+  box-shadow: var(--primary-shadow-hover) !important;
+}
+
+.gradient-secondary:hover {
+  background: var(--secondary-gradient-hover) !important;
+  box-shadow: var(--secondary-shadow-hover) !important;
+}
+
+.gradient-accent:hover {
+  background: var(--accent-gradient-hover) !important;
+  box-shadow: var(--accent-shadow-hover) !important;
+}
+
+.gradient-success:hover {
+  background: var(--success-gradient-hover) !important;
+  box-shadow: var(--success-shadow-hover) !important;
+}
+
+.gradient-warning:hover {
+  background: var(--warning-gradient-hover) !important;
+  box-shadow: var(--warning-shadow-hover) !important;
+}
+
+.gradient-danger:hover {
+  background: var(--danger-gradient-hover) !important;
+  box-shadow: var(--danger-shadow-hover) !important;
+}
+

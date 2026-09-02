@@ -1,0 +1,107 @@
+/* Shared visual styling for the boxed form inputs rendered by renderField()
+   (text, textarea, date picker) across the Self-Evaluation and Manager
+   Evaluation forms. Layout concerns (margin, width, per-form font-size) stay
+   inline at each call site; this file only owns the box's appearance.
+   Selectors are kept compound (two classes, or element+class) so they
+   out-specificity antd's own single-class rules without needing !important. */
+
+.styled-form-input.ant-input,
+.styled-form-input.ant-picker {
+  height: 48px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border, #E5E7EB);
+  padding-left: 14px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.styled-form-input.ant-input:hover,
+.styled-form-input.ant-picker:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Cyan accent (see --color-accent in gradient-theme.css) — the same
+   focus/active color used app-wide (.ant-input:focus etc.), kept distinct
+   from --color-primary (purple), which is reserved for CTA buttons. */
+.styled-form-input.ant-input:focus,
+.styled-form-input.ant-input-focused,
+.styled-form-input.ant-picker-focused {
+  border-color: var(--color-accent, #5DD3E8);
+  box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb, 93, 211, 232), 0.15);
+  outline: none;
+}
+
+textarea.styled-form-input.ant-input {
+  height: auto;
+  min-height: 110px;
+  padding-top: 12px;
+}
+
+/* Radio groups aren't boxed inputs, so only a hover/focus accent color and
+   transition are shared here rather than the full border/height treatment,
+   which would look wrong on a row of individual radio buttons. */
+.styled-radio-group .ant-radio-inner {
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.styled-radio-group .ant-radio-wrapper:hover .ant-radio-inner {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.styled-radio-group .ant-radio-checked .ant-radio-inner {
+  border-color: var(--color-accent, #5DD3E8);
+}
+
+.styled-radio-group .ant-radio-checked .ant-radio-inner::after {
+  background-color: var(--color-accent, #5DD3E8);
+}
+
+.styled-radio-group .ant-radio-input:focus-visible + .ant-radio-inner {
+  box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb, 93, 211, 232), 0.15);
+  outline: none;
+}
+
+/* Project Details question (repeatable_text) — one card per project. Subtle
+   tinted panel on the dark theme, same border token used for section
+   dividers elsewhere on these forms, rather than antd's default light Card. */
+.project-details-card.ant-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.12));
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+/* Read-only display only (ProjectDetailsCards, e.g. the Self Review tab) —
+   narrower than the full-width editable card above, which stays untouched
+   for the fillable Project Details form. */
+.project-details-card--readonly.ant-card {
+  width: 70%;
+}
+
+.project-details-card .ant-card-head {
+  min-height: 0;
+  border-bottom: none;
+  padding: 8px 16px 0;
+}
+
+.project-details-card .ant-card-body {
+  padding: 16px;
+}
+
+.project-details-card .ant-form-item-label > label {
+  color: var(--color-text-secondary, #8B86A2);
+  font-size: 13px;
+}
+
+/* Static "Present" stand-in for End Month, shown once "Currently Working on
+   this Project" is checked — same box dimensions as the real DatePicker
+   (.styled-form-input.ant-picker above) so nothing shifts when it swaps in,
+   just muted text/background and a not-allowed cursor to read as disabled. */
+.project-details-present.styled-form-input {
+  height: 48px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.12));
+  padding-left: 14px;
+  color: var(--color-text-secondary, #8B86A2);
+  background: rgba(255, 255, 255, 0.03);
+  cursor: not-allowed;
+}

@@ -1,0 +1,153 @@
+/* Employee Review Details page (HR Dashboard -> View Details). Sits inside
+   the shared .app-content-card (pageLayout.css) — this file owns the
+   info-grid/workflow-status sections above the tabs, and a few small
+   overrides for the antd Tabs used here (scoped to .hr-employee-tabs so
+   Login's own <Tabs> elsewhere in the app is untouched).
+   The content-width cap (max-width: 1440px + margin: auto) used to be
+   duplicated here at 1400px; it now lives once, shared, directly on
+   .app-page-header/.app-content-card in pageLayout.css, applying to every
+   page that uses those classes instead of just this one. */
+
+.hr-employee-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--color-border, #E5E7EB);
+}
+
+.hr-employee-info-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary, #6B7280);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+
+.hr-employee-info-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text, #111827);
+}
+
+/* Status indicator only — no percentage/progress-bar anywhere here. */
+.hr-workflow-status {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--color-border, #E5E7EB);
+}
+
+.hr-workflow-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 140px;
+  text-align: center;
+}
+
+.hr-workflow-step-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text, #111827);
+}
+
+.hr-workflow-step-status {
+  font-size: 13px;
+  color: var(--color-text-secondary, #6B7280);
+}
+
+.hr-workflow-connector {
+  width: 48px;
+  height: 1px;
+  background-color: var(--color-border, #E5E7EB);
+  margin-top: 15px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .hr-workflow-connector {
+    display: none;
+  }
+}
+
+/* Tab strip: a bit more breathing room than antd's default so the three
+   tabs read as clear, separate destinations rather than a cramped nav.
+   antd already handles the "no horizontal page overflow" requirement
+   itself — .ant-tabs-nav scrolls with its own arrows once the tabs no
+   longer fit, rather than widening the page. */
+.hr-employee-tabs.ant-tabs > .ant-tabs-nav {
+  margin-bottom: 24px;
+}
+
+.hr-employee-tabs .ant-tabs-tab {
+  padding: 10px 2px;
+}
+
+.hr-employee-tabs .ant-tabs-tab + .ant-tabs-tab {
+  margin-left: 36px;
+}
+
+.hr-employee-tabs .ant-tabs-tab .ant-tabs-tab-btn {
+  font-size: 15px;
+}
+
+/* Horizontal breathing room for whichever tab's content is showing (Self
+   Review, Manager Review, etc.) — the panel itself has no padding of its
+   own otherwise, just whatever the outer page card provides. */
+.hr-employee-tabs .ant-tabs-content-holder {
+  padding: 0px 15px;
+}
+
+/* Small "at a glance" status pill beside a tab's own label — subtle by
+   design (inherits .status-badge's soft pill styling), never a substitute
+   for the fuller "Submitted by / Submitted on" header shown once a tab is
+   actually open. */
+.hr-tab-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hr-tab-label-na {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-secondary, #6B7280);
+}
+
+@media (max-width: 600px) {
+  .hr-employee-tabs .ant-tabs-tab + .ant-tabs-tab {
+    margin-left: 20px;
+  }
+
+  .hr-tab-label {
+    gap: 6px;
+  }
+}
+
+/* Manager Evaluation Approve/Reject (HRManagerEvaluationTab) — these render
+   as plain (type-less) antd buttons, i.e. .ant-btn-default, whose background
+   gradient-theme.css sets with !important. A single extra class has the same
+   specificity as .ant-btn-default (both one class), which is a tie webpack's
+   CSS chunk order doesn't reliably resolve in this project's favor — so this
+   combines with .ant-btn for a strictly higher specificity instead, same
+   approach as .evaluation-form-card .ant-btn.evaluation-secondary-btn in
+   evaluationForm.css. */
+.ant-btn.approve-decision-btn {
+  background-color: #4ADE80 !important;
+  border-color: #4ADE80 !important;
+  color: #FFFFFF !important;
+}
+
+.ant-btn.reject-decision-btn {
+  background-color: #F47272 !important;
+  border-color: #F47272 !important;
+  color: #FFFFFF !important;
+}

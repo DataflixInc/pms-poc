@@ -1,0 +1,68 @@
+/* Two-column layout for the Manager Evaluation tab (ManagerEmployeeReview.tsx):
+   the form (~75%) beside the Evaluation Summary sidebar (~25%). Grid (not
+   flex-basis percentages) so the 24px gap doesn't push the total past 100%.
+   align-items: start (not stretch) is what leaves the summary column free to
+   sit shorter than the form column — required for its sticky rule below to
+   have anywhere to travel to.
+   Collapses to a single column at the same tablet breakpoint the evaluation
+   forms themselves use (evaluationForm.css) — a 25%-wide sidebar is too
+   cramped once the form column itself would be narrowing. */
+.manager-eval-tab-layout {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.manager-eval-tab-layout__form {
+  min-width: 0;
+}
+
+.manager-eval-tab-layout__summary {
+  min-width: 0;
+}
+
+/* Sticky only on desktop, where the two columns actually sit side by side —
+   on a single stacked column (below) it would otherwise float over the form
+   as the page scrolls, which isn't what's being asked for there. The
+   scrolling ancestor this sticks within is .app-content-card itself
+   (pageLayout.css: flex: 1; min-height: 0; overflow: auto — the actual
+   scroll container on this page, not the browser window; .app-page-container
+   is height: 100% with overflow: hidden). `top: 0` sticks it right at that
+   card's own padding edge — no extra offset needed, because the header,
+   employee-info grid, workflow status, and tab nav all sit *before* this
+   column in that same scroll flow: none of them are sticky/fixed themselves,
+   so by the time this element's natural position would scroll above the
+   card's top edge, all of those have already scrolled out of view ahead of
+   it. That's what keeps this from ever overlapping them, without having to
+   hardcode a pixel offset that would drift if that header content changes.
+   No max-height/overflow here — the card is always short enough (donut +
+   3-row legend, or the empty state) to need no scrollbar of its own. */
+@media (min-width: 1025px) {
+  .manager-eval-tab-layout__summary {
+    position: sticky;
+    top: 0;
+    align-self: start;
+  }
+}
+
+@media (max-width: 1024px) {
+  .manager-eval-tab-layout {
+    grid-template-columns: 1fr;
+  }
+
+  /* Summary above the form when stacked, per this layout's spec — reordered
+     visually only (source order stays form-then-summary, so desktop's
+     column order is untouched) rather than reshuffling the JSX. */
+  .manager-eval-tab-layout__summary {
+    order: -1;
+  }
+}
+
+.evaluation-summary-card {
+  background-color: var(--color-card, #FFFFFF);
+  border: 1px solid var(--color-border, #E5E7EB);
+  border-radius: 16px;
+  padding: 24px;
+  height: fit-content;
+}

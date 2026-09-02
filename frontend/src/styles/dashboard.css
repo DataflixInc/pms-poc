@@ -1,0 +1,266 @@
+/* Dashboard-specific sections that sit below the page header (kept out of
+   pageLayout.css since that file is shared with the list pages and these
+   styles are specific to the Employee Dashboard). */
+
+/* .app-page-container (pageLayout.css) is a fixed-height, overflow:hidden
+   flex column — fine for Team/Manager Evaluations, whose single
+   .app-content-card scrolls internally. The dashboard instead stacks
+   fixed-height cards with no internal scroll region of their own, so once
+   they're taller than the viewport they'd be silently clipped. Scoped to
+   .allow-scroll (added for the /dashboard route in MainApp.tsx) so this only
+   changes behavior on the dashboard, not the shared class's other consumers. */
+.app-content.allow-scroll .app-page-container {
+  height: auto;
+  min-height: 100%;
+  overflow: visible;
+}
+
+/* Blue gradient banner behind the welcome header — layered on top of the
+   shared .app-page-header/.app-page-title classes (pageLayout.css) via an
+   extra class scoped to this page, so Team/Manager Evaluations' plain
+   headers (which share those same base classes) are unaffected. Reuses the
+   app's existing primary gradient/shadow tokens (gradient-theme.css) rather
+   than a new one-off color. */
+.dashboard-welcome-banner {
+  background: var(--primary-gradient, linear-gradient(135deg, #2563EB 0%, #3b82f6 100%));
+  border-radius: 16px;
+  padding: 14px 28px;
+  box-shadow: var(--primary-shadow, 0 4px 15px rgba(37, 99, 235, 0.25));
+}
+
+/* No description text under the title in this banner (unlike the other
+   pages .app-page-title is shared with) — zero out its margin-bottom so
+   that spacing doesn't inflate the banner's height for nothing. */
+.dashboard-welcome-banner .app-page-title.ant-typography {
+  color: #FFFFFF;
+  margin-bottom: 0;
+}
+
+/* Unified section: review-period grouping + assessment status shown exactly
+   once (replaces what used to be a separate Self Assessment card and
+   Performance Cycle card side by side). Matches the same card recipe used
+   throughout the app (white background, subtle border, light shadow). */
+.my-assessments-card {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background-color: var(--color-card, #FFFFFF);
+  border: 1px solid var(--color-border, #E5E7EB);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+  padding: 24px;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.my-assessments-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.my-assessments-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.my-assessments-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text, #111827);
+}
+
+.my-assessments-cycle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.my-assessments-cycle-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text, #111827);
+}
+
+/* Reused as the "Active" pill next to the cycle name. */
+.performance-cycle-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4ADE80;
+  background-color: rgba(74, 222, 128, 0.15);
+  white-space: nowrap;
+}
+
+.performance-cycle-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #4ADE80;
+}
+
+.dashboard-loading-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.my-assessments-empty-text {
+  font-size: 14px;
+  color: var(--color-text-secondary, #6B7280);
+}
+
+/* Status badge — shared by every period row (Not Started/Upcoming gray,
+   In Progress amber, Submitted green). */
+.self-assessment-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  /* Grid items stretch to fill their column by default, even inline-flex
+     ones — without this the badge's background fills the whole STATUS
+     column instead of hugging just its own text. */
+  width: max-content;
+  justify-self: start;
+}
+
+.self-assessment-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.self-assessment-status-not_submitted {
+  color: #8B86A2;
+  background-color: rgba(139, 134, 162, 0.15);
+}
+
+.self-assessment-status-not_submitted .self-assessment-status-dot {
+  background-color: #8B86A2;
+}
+
+.self-assessment-status-in_progress {
+  color: #F0C97A;
+  background-color: rgba(240, 201, 122, 0.15);
+}
+
+.self-assessment-status-in_progress .self-assessment-status-dot {
+  background-color: #F0C97A;
+}
+
+.self-assessment-status-submitted {
+  color: #4ADE80;
+  background-color: rgba(74, 222, 128, 0.15);
+}
+
+.self-assessment-status-submitted .self-assessment-status-dot {
+  background-color: #4ADE80;
+}
+
+/* Review periods table — clean rows with subtle separators, no heavy
+   borders (mirrors the same pattern already used for tables elsewhere in
+   the app, e.g. .team-table in teamTable.css). */
+.my-assessments-table {
+  display: flex;
+  flex-direction: column;
+}
+
+.my-assessments-row {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 4px;
+  margin: 0 -4px;
+  border-radius: 8px;
+  border-bottom: 1px solid var(--color-border, #E5E7EB);
+  transition: background-color 0.15s ease;
+}
+
+.my-assessments-row:last-child {
+  border-bottom: none;
+}
+
+.my-assessments-row:not(.my-assessments-row-header):hover {
+  background-color: var(--color-background, #F8FAFC);
+}
+
+.my-assessments-row-header {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary, #6B7280);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding-top: 0;
+  padding-bottom: 12px;
+}
+
+.my-assessments-cell {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.my-assessments-period-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text, #111827);
+}
+
+.my-assessments-no-action {
+  font-size: 14px;
+  color: var(--color-text-secondary, #6B7280);
+}
+
+.my-assessments-action {
+  padding: 0;
+  height: auto;
+  width: fit-content;
+  font-weight: 600;
+}
+
+.my-assessments-action.ant-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(93, 211, 232, 0.35) !important;
+  border-radius: 4px;
+}
+
+.my-assessments-mobile-label {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .my-assessments-row-header {
+    display: none;
+  }
+
+  .my-assessments-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 16px 4px;
+    margin: 0 -4px;
+  }
+
+  .my-assessments-mobile-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-secondary, #6B7280);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 2px;
+  }
+}

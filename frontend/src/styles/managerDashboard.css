@@ -1,0 +1,210 @@
+/* Manager Dashboard ("Manager Overview"). Reuses the app's dark-purple
+   theme tokens (gradient-theme.css's :root) throughout rather than
+   introducing new one-off colors, with its own card recipe (purple border,
+   18px radius, 16px padding) distinct from the generic .stat-card in
+   pageLayout.css — this page's cards are intentionally a bolder, more
+   "branded" surface than that shared, more neutral one. */
+
+.manager-overview-title.ant-typography {
+  color: var(--color-text, #F4F1F8);
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+
+.manager-overview-subtitle {
+  display: block;
+  color: var(--color-text-secondary, #C5C0D6);
+  font-size: 15px;
+  line-height: 1.5;
+  margin-bottom: 28px;
+}
+
+/* Card surface. !important is needed because gradient-theme.css's own
+   generic .ant-card / .ant-card:hover rules (border-radius, box-shadow,
+   hover transform) are themselves !important and apply to every antd Card
+   in the app — this is the one place those need overriding for this page's
+   own, more "branded" card recipe. The layered box-shadow (a tight 1px
+   contact shadow plus a soft, wide ambient one) reads as a single soft
+   shadow rather than one flat blur — the same recipe real design systems
+   (Azure/Workday included) use instead of a single-layer box-shadow. */
+.manager-overview-card.ant-card {
+  height: 100%;
+  background-color: var(--color-card, #100D24);
+  border: 1px solid rgba(102, 102, 209, 0.28);
+  border-radius: 18px !important;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.24),
+    0 8px 24px rgba(0, 0, 0, 0.22) !important;
+  transition:
+    transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.25s ease !important;
+}
+
+.manager-overview-card.ant-card:hover {
+  transform: translateY(-6px) !important;
+  border-color: rgba(102, 102, 209, 0.55);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.24),
+    0 16px 40px -12px rgba(102, 102, 209, 0.4),
+    0 8px 24px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* A card's own icon gets a matching, subtle lift on hover — a small enough
+   move to read as "polish", not a layout change. */
+.manager-overview-card.ant-card:hover .summary-stat-card-icon {
+  transform: translateY(-2px);
+}
+
+/* Top-aligned (not centered) — every card's icon lines up at the same top
+   edge regardless of how much content the card holds below it, matching a
+   standard dashboard grid. A shorter card (Total Reportees) simply leaves
+   its own unused space at the bottom, rather than centering its content as
+   a block within the row's shared height. */
+.manager-overview-card .ant-card-body {
+  height: 100%;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Icon badge: rounded square (not a full circle), sat top-left — color and
+   background come from each card's own props (iconColor/iconBackground),
+   so this only owns shape/size/position/depth, never a specific hue. The
+   inset highlight is a 1px inner rim (barely visible, catches the light
+   background/border), the same subtle-depth treatment enterprise dashboards
+   use on icon tiles instead of a flat color fill. */
+.summary-stat-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  margin-bottom: 14px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.summary-stat-card-value {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-text, #F4F1F8);
+  text-align: left;
+}
+
+.summary-stat-card-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--color-text-secondary, #C5C0D6);
+  text-align: left;
+  margin-top: 4px;
+}
+
+.summary-stat-card-subtitle.ant-typography {
+  display: block;
+  font-size: 15px;
+  color: var(--color-text-secondary, #C5C0D6);
+  text-align: left;
+  margin-top: 4px;
+}
+
+/* ReviewStatusCard: icon tile beside a title+subtitle stack, a divider, then
+   a plain two-row "icon, label, right-aligned count" breakdown — no
+   progress bar/percentage/chart, by design. Uses flex throughout. */
+.review-status-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* The icon sits beside the title/subtitle here (not stacked above it like
+   Total Reportees' hero number), so it doesn't need its own bottom margin. */
+.review-status-header .summary-stat-card-icon {
+  margin-bottom: 0;
+}
+
+.review-status-card-title {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: var(--color-text, #F4F1F8);
+  line-height: 1.3;
+}
+
+.review-status-card-subtitle.ant-typography {
+  display: block;
+  font-size: 13px;
+  color: var(--color-text-secondary, #C5C0D6);
+  line-height: 1.3;
+  margin-top: 2px;
+}
+
+.review-status-rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-status-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.review-status-row-icon {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.review-status-row-label {
+  flex: 1;
+  min-width: 0;
+  font-size: 15px;
+  color: var(--color-text, #F4F1F8);
+}
+
+.review-status-row-count {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  flex-shrink: 0;
+}
+
+/* Hairline divider between the header and the two rows — antd's default is
+   both heavier and more widely spaced than this card's tight rhythm calls
+   for, so both are pinned down explicitly rather than left to its defaults. */
+.review-status-divider.ant-divider {
+  margin: 18px 0 4px;
+  border-block-start: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+}
+
+/* Tablet: slightly tighter card padding than desktop's 16px — the cards
+   themselves are narrower here (2-up instead of 3-up) so the same padding
+   would eat proportionally more of each card's width. */
+@media (max-width: 1024px) {
+  .manager-overview-card .ant-card-body {
+    padding: 14px;
+  }
+}
+
+/* Mobile: cards are full-width (1-up) again, so padding returns most of the
+   way back up — enough to keep the 64px hero number from feeling cramped
+   against the card edges on a narrow screen. */
+@media (max-width: 600px) {
+  .manager-overview-subtitle {
+    margin-bottom: 20px;
+  }
+
+  .manager-overview-card .ant-card-body {
+    padding: 15px;
+  }
+}

@@ -1,0 +1,1061 @@
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: #0A0817;
+  font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Base Layout */
+.app-layout {
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Header Styles (color/background theme lives in gradient-theme.css) */
+.app-header {
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  padding: 0 !important;
+  height: 48px !important;
+  line-height: 48px !important;
+}
+
+/* Main Layout */
+.site-layout {
+  padding-top: 48px;
+  height: calc(100vh - 48px);
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Sider Styles */
+.app-sider {
+  background: #100D24 !important;
+  position: fixed;
+  left: 0;
+  top: 48px;
+  bottom: 0;
+  overflow: auto;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.35);
+  width: 220px !important;
+  max-width: 220px !important;
+  min-width: 220px !important;
+  z-index: 999;
+  transition: transform 0.3s ease;
+}
+
+/* Hide mobile menu button on desktop by default */
+.menu-trigger.mobile-menu-btn {
+  display: none !important;
+}
+
+.menu-trigger.desktop-menu-btn {
+  display: flex !important;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .app-sider {
+    transform: translateX(-100%);
+    width: 280px !important;
+    max-width: 280px !important;
+    min-width: 280px !important;
+  }
+  
+  .app-sider.mobile-open {
+    transform: translateX(0);
+  }
+  
+  .app-content {
+    margin: 8px !important;
+    width: calc(100% - 16px) !important;
+    height: calc(100vh - 48px - 16px) !important;
+    overflow: hidden;
+  }
+  
+  .sidebar-collapsed .app-content {
+    margin: 8px !important;
+    width: calc(100% - 16px) !important;
+    height: calc(100vh - 48px - 16px) !important;
+    overflow: hidden;
+  }
+  
+  /* Mobile overlay */
+  .mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .mobile-overlay.show {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Show mobile menu button, hide desktop menu button */
+  .menu-trigger.mobile-menu-btn {
+    display: flex !important;
+  }
+  
+  .menu-trigger.desktop-menu-btn {
+    display: none !important;
+  }
+  
+  /* Hide breadcrumb on mobile */
+  .ant-breadcrumb {
+    display: none !important;
+  }
+
+  /* Fix paragraph spacing on mobile - remove text-indent and padding from first line */
+  p {
+    text-indent: 0 !important;
+    padding-left: 0 !important;
+  }
+  
+  /* Ensure email content paragraphs don't have extra spacing */
+  [class*="email"] p,
+  [class*="template"] p,
+  [class*="welcome"] p,
+  .email-content p,
+  .template-content p,
+  .welcome-email p {
+    text-indent: 0 !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+  }
+
+  /* Form pages mobile responsiveness */
+  .biq-container,
+  .dhq-container,
+  .cjo-container,
+  .postcadet-container,
+  .cvsa-container,
+  .master-cvsa-container {
+    max-width: 100% !important;
+    padding: 16px !important;
+  }
+
+  /* Tables mobile responsiveness */
+  .ant-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .ant-table {
+    font-size: 12px;
+  }
+
+  .ant-table-thead > tr > th {
+    padding: 8px 4px !important;
+    font-size: 11px !important;
+  }
+
+  .ant-table-tbody > tr > td {
+    padding: 8px 4px !important;
+    font-size: 11px !important;
+  }
+
+  /* Cards mobile responsiveness */
+  .ant-card {
+    margin-bottom: 16px;
+  }
+
+  .ant-card-body {
+    padding: 16px !important;
+  }
+
+  /* Buttons mobile responsiveness */
+  .ant-btn {
+    min-height: 44px; /* Minimum touch target size */
+  }
+
+  /* Modals mobile responsiveness */
+  .ant-modal {
+    max-width: 95% !important;
+    margin: 10px auto !important;
+  }
+
+  .ant-modal-content {
+    padding: 16px !important;
+  }
+
+  /* Inputs mobile responsiveness */
+  .ant-input,
+  .ant-input-number,
+  .ant-select-selector {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+  }
+
+  /* Forms mobile spacing */
+  .ant-form-item {
+    margin-bottom: 16px;
+  }
+
+  /* Ensure proper spacing for form containers */
+  [class*="-container"] {
+    box-sizing: border-box !important;
+  }
+}
+
+.ant-layout-sider-collapsed {
+  width: 80px !important;
+  max-width: 80px !important;
+  min-width: 80px !important;
+}
+
+/* Content Styles */
+.app-content {
+  margin: 8px 8px 8px calc(220px + 8px);
+  padding: 8px;
+  border-radius: 2px;
+  transition: all 0.2s;
+  height: calc(100vh - 48px - 16px);
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 220px - 16px);
+  overflow: hidden;
+}
+
+/* Adjust content margin when sidebar is collapsed */
+.sidebar-collapsed .app-content {
+  margin: 8px 8px 8px calc(80px + 8px);
+  width: calc(100% - 80px - 16px);
+}
+
+/* Table Container Styles */
+.table-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #100D24;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  width: 100%;
+}
+
+/* Table Styles */
+.ant-table-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.ant-table {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.ant-table-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.ant-table-body {
+  height: calc(100% - 39px) !important;
+  overflow-y: auto !important;
+  width: 100% !important;
+}
+
+/* Filter Row Styles */
+.ant-row {
+  width: 100%;
+  /* margin: 0 !important; */
+}
+
+.ant-col {
+  padding: 0 8px !important;
+}
+
+/* Custom Scrollbar Styles */
+.ant-table-body::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.ant-table-body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.ant-table-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Table Footer */
+.table-footer {
+  padding: 8px 16px;
+  text-align: right;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: #100D24;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+/* Scrollbar Styles for Sidebar */
+.app-sider::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.app-sider::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.app-sider::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Top Bar Styles */
+.top-bar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 16px;
+  width: 100%;
+}
+
+.top-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.top-bar-right {
+  display: flex;
+  align-items: center;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  /* border-right: 1px solid rgba(255, 255, 255, 0.2); */
+  padding-right: 16px;
+}
+
+.logo-text {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.menu-trigger {
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  color: #fff;
+  font-size: 16px;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  vertical-align: middle !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+.menu-trigger:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+/* Breadcrumb Styles */
+.ant-breadcrumb {
+  font-size: 14px;
+  margin: 0 !important;
+}
+
+.ant-breadcrumb li {
+  color: #fff !important;
+  opacity: 0.85;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.ant-breadcrumb li:last-child {
+  color: #fff !important;
+  opacity: 0.85;
+}
+
+.ant-breadcrumb-separator {
+  color: #fff !important;
+  opacity: 0.85;
+  margin: 0 4px !important;
+  padding: 0 !important;
+}
+
+.ant-breadcrumb a {
+  color: #fff !important;
+  opacity: 0.85;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.ant-breadcrumb ol {
+  margin: 0 !important;
+  padding: 0 !important;
+  gap: 0 !important;
+}
+
+/* Sidebar Styles */
+.main-sidebar.ant-menu {
+  font-size: 14px;
+  border-right: none;
+  padding-top: 16px !important;
+}
+
+.main-sidebar .ant-menu-item {
+  height: 40px;
+  line-height: 40px;
+  margin: 0 0 8px 0;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+/* Hover/selected theme colors for .main-sidebar are owned by gradient-theme.css */
+
+.main-sidebar .menu-header {
+  color: var(--color-text-muted, #8B86A2);
+  font-weight: 500;
+  background-color: transparent;
+  pointer-events: none;
+}
+
+.main-sidebar .ant-menu-item .anticon {
+  font-size: 16px;
+}
+
+/* User Profile Section */
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.user-profile:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ===============================
+   User Profile Dropdown
+=============================== */
+
+.profile-dropdown-card {
+  padding: 12px 16px;
+  min-width: 260px;
+}
+
+.profile-menu-item {
+  cursor: default !important;
+}
+
+/* Profile section should NOT change on hover */
+.profile-menu-item:hover,
+.profile-menu-item.ant-dropdown-menu-item-disabled:hover {
+  background: transparent !important;
+}
+
+/* Only Sign Out changes color */
+.ant-dropdown-menu-item:hover {
+    background: #1B1734 !important;
+}
+
+.ant-dropdown-menu-item:hover .ant-dropdown-menu-title-content {
+    color: #FFFFFF !important;
+}
+
+.ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item {
+  transition: background-color .25s ease;
+}
+
+/* Notification Badge */
+.ant-badge-count {
+  background: #ff4d4f;
+  box-shadow: none;
+  padding: 0 4px;
+  font-size: 12px;
+  line-height: 16px;
+  height: 16px;
+  min-width: 16px;
+}
+
+/* Content Area Adjustment for Fixed Header */
+.ant-layout-content {
+  margin-top: 8px !important;
+}
+
+.logo {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1890ff;
+  overflow: hidden;
+}
+
+.logo h1 {
+  color: white;
+  font-size: 24px;
+  margin: 0;
+  transition: all 0.3s;
+}
+
+/* Transition effects */
+.ant-layout-sider-children {
+  transition: all 0.2s;
+}
+
+.ant-layout-sider-collapsed .logo h1 {
+  font-size: 20px;
+}
+
+/* Submenu Styles */
+.ant-menu-submenu-title {
+  height: 40px !important;
+  line-height: 40px !important;
+  margin: 0 0 8px 0 !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+.ant-menu-sub.ant-menu-inline {
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+
+.ant-menu-sub.ant-menu-inline .ant-menu-item {
+  padding-left: 40px !important;
+  padding-right: 16px !important;
+  height: 36px !important;
+  line-height: 36px !important;
+  margin-bottom: 6px !important;
+}
+
+.ant-menu-sub.ant-menu-inline .ant-menu-submenu .ant-menu-item {
+  padding-left: 64px !important;
+  padding-right: 16px !important;
+}
+
+/* Icon Styles */
+.ant-menu-item .anticon,
+.ant-menu-submenu-title .anticon {
+  font-size: 15px !important;
+  margin-right: 12px !important;
+  margin-left: 4px !important;
+}
+
+/* More specific targeting for sidebar icons */
+.main-sidebar .ant-menu-item .anticon,
+.main-sidebar .ant-menu-submenu-title .anticon {
+  margin-right: 12px !important;
+  margin-left: 4px !important;
+}
+
+/* Force icon positioning with higher specificity */
+.main-sidebar.ant-menu .ant-menu-item .anticon,
+.main-sidebar.ant-menu .ant-menu-submenu-title .anticon {
+  margin-right: 12px !important;
+  margin-left: 4px !important;
+}
+
+/* Selected and Hover States - Less specific, only for general menu items (not sidebar) */
+.ant-menu:not(.main-sidebar) .ant-menu-item:hover,
+.ant-menu:not(.main-sidebar) .ant-menu-submenu-title:hover {
+    color: var(--color-accent, #5DD3E8) !important;
+}
+
+.ant-menu-submenu-selected > .ant-menu-submenu-title {
+  color: var(--color-accent, #5DD3E8) !important;
+}
+
+/* Only apply to menus that are not the main sidebar */
+.ant-menu:not(.main-sidebar) .ant-menu-item-selected {
+  background-color: rgba(93, 211, 232, 0.12) !important;
+  color: var(--color-accent, #5DD3E8) !important;
+}
+
+/* Submenu Arrow */
+.ant-menu-submenu-arrow {
+  color: var(--color-text-secondary, #C5C0D6) !important;
+}
+
+.ant-menu-submenu-title:hover .ant-menu-submenu-arrow {
+  color: var(--color-accent, #5DD3E8) !important;
+}
+
+/* Indent Lines */
+.ant-menu-inline .ant-menu-item::after {
+  border-right: 3px solid #0078d4;
+}
+
+/* Collapsed State */
+.ant-menu-inline-collapsed {
+  width: 80px;
+}
+
+.ant-menu-inline-collapsed .ant-menu-item,
+.ant-menu-inline-collapsed .ant-menu-submenu-title {
+  padding: 0 24px !important;
+}
+
+/* Add these styles to handle nested submenus better */
+
+/* Nested Submenu Styles */
+.ant-menu-submenu-inline .ant-menu-submenu-title {
+  padding-left: 24px !important;
+}
+
+.ant-menu-submenu-inline .ant-menu-sub {
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* First level items under Palicon */
+.ant-menu-submenu-inline > .ant-menu-sub > .ant-menu-item,
+.ant-menu-submenu-inline > .ant-menu-sub > .ant-menu-submenu > .ant-menu-submenu-title {
+  padding-left: 48px !important;
+}
+
+/* Second level items (items under Report, Project, Break Bulk) */
+.ant-menu-submenu-inline > .ant-menu-sub > .ant-menu-submenu > .ant-menu-sub > .ant-menu-item {
+  padding-left: 72px !important;
+  height: 32px !important;
+  line-height: 32px !important;
+  background: transparent !important;
+}
+
+/* Hover states for nested items */
+.ant-menu-submenu-inline > .ant-menu-sub > .ant-menu-submenu > .ant-menu-sub > .ant-menu-item:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Selected state for nested items */
+.ant-menu-submenu-inline > .ant-menu-sub > .ant-menu-submenu > .ant-menu-sub > .ant-menu-item-selected {
+  background: rgba(93, 211, 232, 0.12) !important;
+}
+
+/* Submenu title hover effect */
+.main-sidebar .ant-menu-submenu-title:hover {
+  background: rgba(93, 211, 232, 0.08) !important;
+  color: var(--color-accent, #5DD3E8) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Table Pagination Styles */
+.ant-table-pagination {
+  margin: 16px 0 !important;
+  padding: 0 16px !important;
+}
+
+/* Add extra spacing for users table pagination */
+.users-table .ant-table-pagination {
+  margin-top: 24px !important;
+  margin-bottom: 16px !important;
+  padding: 0 16px !important;
+}
+
+/* Add extra spacing for applicants summary table pagination */
+.applicants-summary-table .ant-table-pagination {
+  margin-top: 24px !important;
+  margin-bottom: 16px !important;
+  padding: 0 16px !important;
+}
+
+/* Add extra spacing for applicant view table pagination */
+.applicant-view-table .ant-table-pagination {
+  margin-top: 24px !important;
+}
+
+/* Ensure applicant view table scrolls within its container */
+.applicant-view-table {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.applicant-view-table .ant-table-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.applicant-view-table .ant-table-body {
+  overflow-y: auto !important;
+  overflow-x: auto !important;
+  flex: 1;
+}
+
+/* Custom scrollbar for grid view */
+.app-content > div > div[style*="gridTemplateColumns"] {
+  scrollbar-width: thin;
+  scrollbar-color: #ccc #f1f1f1;
+}
+
+.app-content > div > div[style*="gridTemplateColumns"]::-webkit-scrollbar {
+  width: 8px;
+}
+
+.app-content > div > div[style*="gridTemplateColumns"]::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+.app-content > div > div[style*="gridTemplateColumns"]::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Ensure Card body supports flex layout for scrolling in ApplicantView */
+.applicant-view-card {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom scrollbar for Dashboard Forms & Templates */
+.dashboard-forms-scrollable {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+.dashboard-forms-scrollable::-webkit-scrollbar {
+  width: 10px;
+}
+
+.dashboard-forms-scrollable::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 5px;
+}
+
+.dashboard-forms-scrollable::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 5px;
+  transition: background 0.2s ease;
+}
+
+.dashboard-forms-scrollable::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.applicant-view-card > .ant-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+  padding: 16px !important;
+}
+
+/* Add extra spacing for admin summary table pagination */
+.admin-summary-table .ant-table-pagination {
+  margin-top: 24px !important;
+  margin-bottom: 16px !important;
+  padding: 0 16px !important;
+}
+
+/* Add extra spacing for investigator dashboard table pagination */
+.investigator-dashboard-table .ant-table-pagination {
+  margin-top: 24px !important;
+  margin-bottom: 16px !important;
+  padding: 0 16px !important;
+}
+
+/* Reduce bottom padding for investigator dashboard card body */
+.investigator-dashboard-card > .ant-card-body {
+  padding-bottom: 10px !important;
+}
+
+/* Add extra spacing for technician dashboard table pagination */
+.technician-dashboard-table .ant-table-pagination {
+  margin-top: 24px !important;
+  margin-bottom: 16px !important;
+  padding: 0 16px !important;
+}
+
+/* Add grey background to users table headers */
+.users-table .ant-table-thead > tr > th {
+  background-color: #f5f5f5 !important;
+  font-weight: 600;
+  text-align: inherit !important;
+  height: auto !important;
+  padding-top: 16px !important;
+  padding-bottom: 16px !important; /* Bottom padding to match row spacing */
+  border-bottom: 0 !important;
+  border: 0 !important;
+  border-bottom-width: 0 !important;
+  border-bottom-style: none !important;
+  border-bottom-color: transparent !important;
+}
+
+.users-table .ant-table-thead > tr > th::after {
+  display: none !important;
+  content: none !important;
+}
+
+.users-table .ant-table-thead > tr {
+  border-bottom: none !important;
+  border: none !important;
+}
+
+.users-table .ant-table-thead {
+  border-bottom: none !important;
+  border: none !important;
+}
+
+.users-table .ant-table-container {
+  border-top: none !important;
+  border: none !important;
+}
+
+.users-table .ant-table-container::before {
+  display: none !important;
+  content: none !important;
+}
+
+.users-table .ant-table-container::after {
+  display: none !important;
+  content: none !important;
+}
+
+.users-table .ant-table {
+  border-top: none !important;
+  border: none !important;
+}
+
+.users-table .ant-table > .ant-table-container > .ant-table-content > table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+.users-table .ant-table > .ant-table-container > .ant-table-content > table > thead {
+  border-bottom: none !important;
+}
+
+.users-table .ant-table > .ant-table-container > .ant-table-content > table > thead > tr {
+  border-bottom: none !important;
+}
+
+.users-table .ant-table > .ant-table-container > .ant-table-content > table > tbody {
+  border-top: none !important;
+}
+
+.users-table .ant-table > .ant-table-container > .ant-table-content > table > tbody > tr:first-child {
+  border-top: none !important;
+}
+
+.users-table .ant-table > .ant-table-container > .ant-table-content > table > tbody > tr:first-child > td {
+  border-top: none !important;
+}
+
+
+/* Force remove border using all possible selectors */
+.users-table .ant-table-thead tr th,
+.users-table .ant-table-thead th,
+.users-table table thead tr th {
+  border-bottom: 0 !important;
+  border-bottom-width: 0 !important;
+  border-bottom-style: none !important;
+  border-bottom-color: transparent !important;
+}
+
+/* Completely remove any line after headers - overlay approach */
+.users-table .ant-table-thead {
+  position: relative;
+  border-bottom: 0 !important;
+}
+
+.users-table .ant-table-thead::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #f5f5f5 !important;
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* Extend header background down to cover any line using box-shadow */
+.users-table .ant-table-thead > tr > th {
+  position: relative;
+  z-index: 1;
+  border-bottom: 0 !important;
+}
+
+/* Remove border from table structure */
+.users-table table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+.users-table table thead {
+  border-bottom: 0 !important;
+}
+
+.users-table table tbody {
+  border-top: 0 !important;
+}
+
+.users-table .ant-table-tbody {
+  border-top: none !important;
+}
+
+.users-table .ant-table-tbody > tr:first-child > td {
+  border-top: none !important;
+}
+
+/* Ensure header alignment matches column alignment */
+.users-table .ant-table-thead > tr > th.ant-table-column-has-actions {
+  text-align: inherit !important;
+}
+
+/* Add grey background to applicants summary table headers */
+.applicants-summary-table .ant-table-thead > tr > th {
+  background-color: #f5f5f5 !important;
+  font-weight: 600;
+  text-align: inherit !important;
+}
+
+/* Ensure header alignment matches column alignment */
+.applicants-summary-table .ant-table-thead > tr > th.ant-table-column-has-actions {
+  text-align: inherit !important;
+}
+
+/* Add grey background to admin summary table headers */
+.admin-summary-table .ant-table-thead > tr > th {
+  background-color: #f5f5f5 !important;
+  font-weight: 600;
+  text-align: inherit !important;
+}
+
+/* Ensure header alignment matches column alignment */
+.admin-summary-table .ant-table-thead > tr > th.ant-table-column-has-actions {
+  text-align: inherit !important;
+}
+
+/* Add grey background to investigator dashboard table headers */
+.investigator-dashboard-table .ant-table-thead > tr > th {
+  background-color: #f5f5f5 !important;
+  font-weight: 600;
+  text-align: inherit !important;
+}
+
+/* Ensure header alignment matches column alignment */
+.investigator-dashboard-table .ant-table-thead > tr > th.ant-table-column-has-actions {
+  text-align: inherit !important;
+}
+
+/* Add grey background to technician dashboard table headers */
+.technician-dashboard-table .ant-table-thead > tr > th {
+  background-color: #f5f5f5 !important;
+  font-weight: 600;
+  text-align: inherit !important;
+}
+
+/* Ensure header alignment matches column alignment */
+.technician-dashboard-table .ant-table-thead > tr > th.ant-table-column-has-actions {
+  text-align: inherit !important;
+}
+
+/* Add grey background to applicant view table headers */
+.applicant-view-table .ant-table-thead > tr > th {
+  background-color: #f5f5f5 !important;
+  font-weight: 600;
+  text-align: inherit !important;
+}
+
+/* Ensure header alignment matches column alignment */
+.applicant-view-table .ant-table-thead > tr > th.ant-table-column-has-actions {
+  text-align: inherit !important;
+}
+
+/* Increase horizontal lines between data rows in users table */
+.users-table .ant-table-tbody > tr > td {
+  border-bottom: 1px solid #d9d9d9 !important;
+}
+
+.users-table .ant-table-tbody > tr:first-child > td {
+  border-top: none !important;
+}
+
+.users-table .ant-table-tbody {
+  border-top: none !important;
+}
+
+/* Increase horizontal lines between data rows in admin summary table */
+.admin-summary-table .ant-table-tbody > tr > td {
+  border-bottom: 1px solid #d9d9d9 !important;
+}
+
+/* Increase horizontal lines between data rows in applicants summary table */
+.applicants-summary-table .ant-table-tbody > tr > td {
+  border-bottom: 1px solid #d9d9d9 !important;
+}
+
+/* Increase horizontal lines between data rows in investigator dashboard table */
+.investigator-dashboard-table .ant-table-tbody > tr > td {
+  border-bottom: 1px solid #d9d9d9 !important;
+}
+
+/* Increase horizontal lines between data rows in technician dashboard table */
+.technician-dashboard-table .ant-table-tbody > tr > td {
+  border-bottom: 1px solid #d9d9d9 !important;
+}
+
+/* Increase horizontal lines between data rows in applicant view table */
+.applicant-view-table .ant-table-tbody > tr > td {
+  border-bottom: 1px solid #d9d9d9 !important;
+}
+
+.ant-pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0 !important;
+}
+
+.ant-pagination-total-text {
+  margin-right: 16px;
+  color: var(--color-text-secondary, #C5C0D6);
+}
+
+.ant-pagination-options {
+  margin-left: 16px;
+}
+
+/* Routes that need natural scrolling (content taller than the viewport):
+   keep the same fixed height as the base .app-content rule — its parent
+   .site-layout has a fixed height AND overflow:hidden, so setting height:auto
+   here would just let the parent clip the overflow instead of this element
+   ever scrolling — and switch overflow-y to auto so *this* element scrolls
+   internally within that fixed height instead of clipping like the default. */
+.app-content.allow-scroll {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  height: calc(100vh - 48px - 16px) !important;
+}
+
+

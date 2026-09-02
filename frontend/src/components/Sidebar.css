@@ -1,0 +1,32 @@
+.menu-with-gap .ant-menu-item {
+  margin-bottom: 8px !important;
+}
+
+.menu-with-gap .ant-menu-submenu {
+  margin-bottom: 8px !important;
+}
+
+.menu-with-gap .ant-menu-item:last-child {
+  margin-bottom: 0 !important;
+}
+
+.menu-with-gap .ant-menu-submenu:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* Adjust icon positioning to center them better */
+.main-sidebar .ant-menu-item {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+
+.main-sidebar .ant-menu-item-icon {
+  margin-left: 4px !important;
+  margin-right: 12px !important;
+}
+
+.main-sidebar .ant-menu-submenu .ant-menu-item-icon {
+  margin-left: 4px !important;
+  margin-right: 12px !important;
+}

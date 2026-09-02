@@ -1,0 +1,29 @@
+# Documentation (excluded per request)
+docs/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+.pytest_cache/
+
+# Node / frontend
+node_modules/
+build/
+dist/
+.cache/
+
+# Stray backup archive (duplicate of tracked source)
+backend/backend.zip
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

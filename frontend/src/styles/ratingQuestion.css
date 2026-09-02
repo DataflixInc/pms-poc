@@ -1,0 +1,140 @@
+/* RatingQuestion (see RatingQuestion.tsx): enterprise-style 0-10 rating
+   slider question — number + title + description, a purple-themed Ant
+   Design Slider, and a persistent "Selected Rating" readout. Uses the app's
+   existing dark-theme tokens (gradient-theme.css's :root) throughout, no
+   one-off colors. */
+
+.rating-question {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px 0;
+}
+
+.rating-question-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.rating-question-number {
+  flex-shrink: 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--color-text, #F4F1F8);
+}
+
+.rating-question-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.rating-question-title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--color-text, #F4F1F8);
+}
+
+.rating-question-required {
+  margin-left: 4px;
+  color: var(--color-error, #F47272);
+}
+
+.rating-question-description {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text-muted, #8B86A2);
+}
+
+.rating-question-control {
+  padding: 0 8px;
+  max-width: 400px;
+}
+
+/* Purple track/handle. This app otherwise reserves purple for CTA buttons
+   and uses the cyan accent for "selected/active" state (see antdTheme.ts),
+   but a rating slider's filled track IS the answer itself, not a nav/
+   selection indicator — the spec for this component calls for the primary
+   purple specifically. !important mirrors the same override pattern
+   managerDashboard.css already uses against antd's own generated component
+   styles. */
+.rating-question-slider.ant-slider .ant-slider-rail {
+  background-color: var(--color-border-strong, rgba(255, 255, 255, 0.16));
+}
+
+.rating-question-slider.ant-slider .ant-slider-track {
+  background-color: var(--color-primary, #6666D1) !important;
+}
+
+.rating-question-slider.ant-slider:hover .ant-slider-rail {
+  background-color: var(--color-border-strong, rgba(255, 255, 255, 0.16));
+}
+
+.rating-question-slider.ant-slider:hover .ant-slider-track {
+  background-color: var(--color-primary-light, #8682DC) !important;
+}
+
+.rating-question-slider.ant-slider .ant-slider-handle::after {
+  width: 16px;
+  height: 16px;
+  inset-inline-start: -6px;
+  inset-block-start: -6px;
+  background-color: var(--color-primary, #6666D1);
+  box-shadow: 0 0 0 2px var(--color-primary, #6666D1) !important;
+}
+
+.rating-question-slider.ant-slider:hover .ant-slider-handle::after {
+  box-shadow: 0 0 0 4px var(--color-primary-light, #8682DC) !important;
+}
+
+.rating-question-slider.ant-slider .ant-slider-handle:focus::after {
+  box-shadow: 0 0 0 5px rgba(var(--color-primary-rgb, 102, 102, 209), 0.35) !important;
+}
+
+.rating-question-slider.ant-slider-disabled .ant-slider-track {
+  background-color: var(--color-text-muted, #8B86A2) !important;
+}
+
+.rating-question-slider.ant-slider-disabled .ant-slider-handle::after {
+  background-color: var(--color-text-muted, #8B86A2);
+  box-shadow: 0 0 0 2px var(--color-text-muted, #8B86A2) !important;
+}
+
+.rating-question-slider .ant-slider-mark-text {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-muted, #8B86A2);
+}
+
+.rating-question-result {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.rating-question-result-label {
+  font-weight: 500;
+  color: var(--color-text-secondary, #C5C0D6);
+}
+
+.rating-question-result-value {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text, #F4F1F8);
+}
+
+.rating-question-result-value--empty {
+  font-weight: 500;
+  font-style: italic;
+  color: var(--color-text-muted, #8B86A2);
+}
+
+.rating-question--disabled .rating-question-title,
+.rating-question--disabled .rating-question-description {
+  opacity: 0.7;
+}

@@ -1,0 +1,48 @@
+/* ReviewHistory timeline — new component, no prior "Review History" styling
+   existed to match, so this follows the same dark-theme tokens used
+   throughout (gradient-theme.css's :root) and the same label/value rhythm as
+   hrEmployeeDetails.css's info rows. */
+
+/* No border-top/padding-top of its own — this always sits right after
+   HRManagerEvaluationTab's "Submitted by/on" info row, which already ends in
+   its own border-bottom serving as the one divider between them. Adding a
+   second bordered gap here on top of that stacked two visible divider lines
+   with a large empty gap between. */
+.review-history {
+  margin-top: 24px;
+}
+
+.review-history-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #F4F1F8;
+  margin-bottom: 16px;
+}
+
+.review-history-entry-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #F4F1F8;
+}
+
+.review-history-entry-meta {
+  font-size: 12px;
+  color: #8B86A2;
+  margin-top: 2px;
+}
+
+.review-history-entry-reason {
+  font-size: 13px;
+  color: #C5C0D6;
+  margin-top: 6px;
+  padding: 8px 12px;
+  background: rgba(244, 114, 114, 0.08);
+  border: 1px solid rgba(244, 114, 114, 0.2);
+  border-radius: 6px;
+}
+
+/* antd's default Timeline tail/dot colors assume a light page background —
+   without this the connecting line is nearly invisible on our dark theme. */
+.review-history .ant-timeline-item-tail {
+  border-inline-start: 2px solid rgba(255, 255, 255, 0.12) !important;
+}

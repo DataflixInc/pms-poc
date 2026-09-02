@@ -1,0 +1,280 @@
+/* Modern enterprise redesign for the Team Evaluations table. The table
+   already sits inside .app-content-card (see pageLayout.css), which owns the
+   outer white background/shadow — this file only owns the table's *internal*
+   presentation: header, row height/separators, hover, and column spacing.
+   Selectors are scoped under .team-table and kept one level more specific
+   than antd's own (an extra ancestor class), so they win without !important. */
+
+.team-table .ant-table-container {
+  border-radius: 12px;
+  /* Clips the header's square corners to match the rounded shape below. */
+  overflow: hidden;
+}
+
+/* Sticky header, internally-scrolling body — opt-in via the
+   scrollable-team-table class (alongside .team-table) on tables that pass a
+   `scroll.y` prop. That prop is what makes antd split the header into its
+   own fixed row with the body in a separate scrollable div (.ant-table-body)
+   below it, but the max-height it applies inline is just a fixed
+   placeholder — override it here so the body instead flexes to fill
+   whatever height .app-content-card actually has (varies by viewport),
+   rather than being capped at that placeholder or, without this override,
+   growing tall enough that the *card* has to scroll (headers included). */
+.scrollable-team-table.ant-table-wrapper,
+.scrollable-team-table .ant-spin-nested-loading,
+.scrollable-team-table .ant-spin-container,
+.scrollable-team-table .ant-table,
+.scrollable-team-table .ant-table-container {
+  height: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.scrollable-team-table .ant-table-body {
+  flex: 1;
+  min-height: 0;
+  max-height: none !important;
+  overflow-y: auto !important;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.04);
+}
+
+/* Default scrollbar renders as a plain white bar with no track/border on
+   this dark background — give it a visible dark track and a bordered thumb. */
+.scrollable-team-table .ant-table-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollable-team-table .ant-table-body::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 4px;
+}
+
+.scrollable-team-table .ant-table-body::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.scrollable-team-table .ant-table-body::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.35);
+}
+
+/* Header: white/light-gray instead of a solid color block, semi-bold text. */
+.team-table .ant-table-thead > tr > th {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--color-text, #111827);
+  font-weight: 600;
+  border-bottom: 1px solid var(--color-border-strong, #E5E7EB);
+  padding: 16px 20px;
+}
+
+/* antd's built-in vertical divider between header cells reads as a "heavy
+   border" next to the rest of this lighter design — drop it. */
+.team-table .ant-table-thead > tr > th::before {
+  display: none !important;
+}
+
+/* Rows: taller, with a single subtle bottom hairline instead of a full grid
+   of heavy borders. */
+.team-table .ant-table-tbody > tr > td {
+  height: 60px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--color-border-strong, #E5E7EB);
+}
+
+.team-table .ant-table-tbody > tr:last-child > td {
+  border-bottom: none;
+}
+
+/* antd toggles a hover class per-cell (rather than relying only on :hover)
+   so rowspan/colspan cells highlight together — cover both mechanisms. */
+.team-table .ant-table-tbody > tr:hover > td,
+.team-table .ant-table-tbody > tr > td.ant-table-cell-row-hover {
+  background: var(--color-background, #F8FAFC);
+}
+
+/* Employee cell: circular initials avatar + stacked name/email. */
+.employee-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.employee-avatar.ant-avatar {
+  background-color: rgba(93, 211, 232, 0.15);
+  color: var(--color-accent, #5DD3E8);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.employee-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.employee-name,
+.employee-email {
+  /* Truncate gracefully instead of wrapping/overflowing on narrower columns
+     (e.g. when the card scrolls horizontally on mobile). */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 220px;
+}
+
+.employee-name {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--color-text, #111827);
+}
+
+.employee-email {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--color-text-secondary, #6B7280);
+}
+
+/* Status badge: soft-colored pill with a matching dot, rather than a plain
+   outlined tag. */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.status-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Score cell: fraction, progress bar, then percentage — all driven by the
+   same `percentage` value computed once per row. */
+.score-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 140px;
+}
+
+.score-fraction {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text, #111827);
+}
+
+.score-percentage {
+  font-size: 12px;
+  color: var(--color-text-secondary, #6B7280);
+}
+
+/* Pagination: rounded page buttons and a muted "Showing X–Y of Z" label,
+   instead of antd's plain default look. */
+.team-table .ant-pagination {
+  margin-top: 20px !important;
+}
+
+.team-table .ant-pagination-total-text {
+  color: var(--color-text-secondary, #6B7280);
+  font-size: 14px;
+}
+
+.team-table .ant-pagination-item {
+  border-radius: 8px;
+  border: 1px solid var(--color-border, #E5E7EB);
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.team-table .ant-pagination-item a {
+  color: var(--color-text, #111827);
+}
+
+.team-table .ant-pagination-item:hover {
+  border-color: var(--color-primary, #2563EB);
+}
+
+.team-table .ant-pagination-item:hover a {
+  color: var(--color-primary, #2563EB);
+}
+
+.team-table .ant-pagination-item-active {
+  background: var(--color-primary, #2563EB);
+  border-color: var(--color-primary, #2563EB);
+}
+
+/* Active page's bg is --color-primary (cyan, a light fill) — dark text,
+   not white, to stay readable. */
+.team-table .ant-pagination-item-active a {
+  color: #0A0817;
+}
+
+.team-table .ant-pagination-item-active:hover a {
+  color: #0A0817;
+}
+
+.team-table .ant-pagination-prev .ant-pagination-item-link,
+.team-table .ant-pagination-next .ant-pagination-item-link {
+  border-radius: 8px;
+  border: 1px solid var(--color-border, #E5E7EB);
+  color: var(--color-text, #111827);
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.team-table .ant-pagination-prev:hover .ant-pagination-item-link,
+.team-table .ant-pagination-next:hover .ant-pagination-item-link {
+  border-color: var(--color-primary, #2563EB);
+  color: var(--color-primary, #2563EB);
+}
+
+/* Empty state: centered icon + heading + short description, filling the
+   available card space instead of a single line of gray text. */
+.team-empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+  padding: 48px 24px;
+}
+
+.team-empty-icon {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(93, 211, 232, 0.12);
+  color: var(--color-accent, #5DD3E8);
+  font-size: 28px;
+}
+
+.team-empty-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text, #111827);
+}
+
+.team-empty-description {
+  max-width: 320px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-text-secondary, #6B7280);
+}
